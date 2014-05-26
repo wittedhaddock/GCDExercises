@@ -71,12 +71,15 @@
      second
      
      where "second" prints within 100ms of "first" */
-    dispatch_async(dispatch_get_main_queue(), ^{
-        int time = arc4random() % 10;
-        sleep(time);
-        NSLog(@"first");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            int time = arc4random() % 10;
+            dispatch_barrier_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            sleep(time);
+            NSLog(@"first");
+        });
+        NSLog(@"second");
     });
-    NSLog(@"second");
+    
 }
 
 - (IBAction)exercise4:(id)sender {
