@@ -30,13 +30,31 @@
 
 - (IBAction)exercise1:(id)sender {
     /**Make the label display the status appropriately */
-    [UIView animateWithDuration:5.0 animations:^{
-        self.label.text = @"animating";
-        CGRect frame = self.label.frame;
-        frame.origin.y += 50;
-        self.label.frame = frame;
-    }];
-    self.label.text = @"no longer animating";
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t serialQ2 = dispatch_queue_create("mine", DISPATCH_QUEUE_SERIAL);
+    self.label.text = @"animating";
+        [UIView animateWithDuration:3.0 animations :^{
+            
+            CGRect frame = self.label.frame;
+            frame.origin.y += 50;
+            self.label.frame = frame;
+        } completion:^(BOOL finished) {
+            self.label.text = @"done animating";
+        }];
+        
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+        
+    });
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            
+    });
+
+  
+
+    NSLog(@"called");
+
+
 }
 
 - (IBAction)exercise2:(id)sender {
