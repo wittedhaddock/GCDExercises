@@ -41,14 +41,7 @@
         } completion:^(BOOL finished) {
             self.label.text = @"done animating";
         }];
-        
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-
-        
-    });
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-            
-    });
+    
 
   
 
@@ -67,7 +60,7 @@
      object 6
      */
     NSArray *myArray = @[@1,@2,@3,@4,@5,@6];
-    [myArray enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [myArray enumerateObjectsWithOptions:0 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSLog(@"object %@",obj);
     }];
 }
