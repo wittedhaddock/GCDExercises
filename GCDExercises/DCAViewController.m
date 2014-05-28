@@ -30,8 +30,6 @@
 
 - (IBAction)exercise1:(id)sender {
     /**Make the label display the status appropriately */
-    dispatch_group_t group = dispatch_group_create();
-    dispatch_queue_t serialQ2 = dispatch_queue_create("mine", DISPATCH_QUEUE_SERIAL);
     self.label.text = @"animating";
         [UIView animateWithDuration:3.0 animations :^{
             
@@ -85,9 +83,14 @@
 - (IBAction)exercise4:(id)sender {
 /**expected: at the same time the log is printed, the label text changes
  actual: there is a unexplainable delay */
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"changing label");
-        self.label.text = @"exercise 4";
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+            dispatch_async(dispatch_queue_create("q", 0), ^{
+                
+                NSLog(@"changing label");
+                self.label.text = @"exercise 4";
+            });
     });
 }
 
@@ -101,7 +104,7 @@
     
     /**No edits before this point */
     
-    /** Add code only here */
+
     
     /**No edits beyond this point */
     
@@ -117,7 +120,7 @@
     /**Expected: prints a statement after 5 seconds
      Actual: hangs the application */
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_queue_create("newQ", 0), ^{
             NSLog(@"Got here");
         });
     });
