@@ -144,7 +144,8 @@
      
      1.  Why does this happen?
      2.  Is this a real bug in your library, or is there a problem with the test case?  Or both?
-     3.  Fix the problem(s) */
+     3.  Fix the problem(s)
+     4.  Can you infer any general rules about good practices for library code from this example?*/
     
      
 }
