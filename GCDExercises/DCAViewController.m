@@ -7,6 +7,7 @@
 //
 
 #import "DCAViewController.h"
+#import "DCASampleLibrary.h"
 
 @interface DCAViewController () {
     NSArray *blockArray;
@@ -108,6 +109,48 @@
         });
     });
 }
+- (IBAction)exercise7:(id)sender {
+    /**By only editing in the areas provided, make the output
+     
+     first
+     second
+     third
+     
+     where "second" prints within 100ms of "first" and "third" prints within 100ms of "third" */
+    dispatch_async(dispatch_get_main_queue(), ^{
+        int time = arc4random() % 10;
+        sleep(time);
+        NSLog(@"first");
+        /** You may add code here */
+        NSLog(@"third");
+    });
+    /** You may add code here */
+    NSLog(@"second");
+    /** You may add code here */
+}
+
+- (IBAction)exercise8:(id)sender {
+    /** DCASampleLibrary is a library you maintain.  A user of the library is reporting a bug that the sendAlert function in the library is not really threadsafe.  
+     
+     They provided this test case.  They expect to see two dialogs, but instead the program hangs.
+     */
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [DCASampleLibrary sendAlertWithTitle:@"Hello from background queue"];
+    });
+    sleep(5);
+    [DCASampleLibrary sendAlertWithTitle:@"Hello from normal code"];
+    
+    /** So some questions are as follows:
+     
+     1.  Why does this happen?
+     2.  Is this a real bug in your library, or is there a problem with the test case?  Or both?
+     3.  Fix the problem(s) */
+    
+     
+}
+
+
+
 
 
 
