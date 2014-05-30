@@ -8,6 +8,7 @@
 
 #import "DCAViewController.h"
 #import "DCASampleLibrary.h"
+#import "OneOfTheseThingsIsNotLikeTheOther.h"
 
 @interface DCAViewController () {
     NSArray *blockArray;
@@ -149,6 +150,34 @@
     
      
 }
+
+- (IBAction)exercise9:(id)sender {
+    
+    /**This function prints integers 1-100 out of order, but integers 100-200 in order.  Why?
+     
+     No source code for OneOfTheseThingsIsNotLikeTheOther is provided.  Can you figure out how it works?  Can you write your own version?
+     
+     */
+    dispatch_queue_t queue1 = [OneOfTheseThingsIsNotLikeTheOther queue2];
+    
+    
+    for(int i = 0; i < 100; i++) {
+        dispatch_async(queue1, ^{
+            NSLog(@"%d",i);
+            sleep(1);
+        });
+    }
+    sleep(5);
+    dispatch_queue_t queue2 = [OneOfTheseThingsIsNotLikeTheOther queue1];
+    for(int i = 100; i < 200; i++) {
+        dispatch_async(queue2, ^{
+            NSLog(@"%d",i);
+            sleep(1);
+        });
+    }
+
+}
+
 
 
 
