@@ -227,6 +227,41 @@
      
 }
 
+- (IBAction)exercise12:(id)sender {
+    /** DCASampleLibrary is a library you maintain.  A user of the library is reporting a bug that the concatenateStrings function in this library is not really threadsafe.
+     
+     They provided this test case.  They expect it to run without assertions, but they get one.
+     
+     
+     */
+    
+    __block NSString *current = @"";
+    NSMutableArray *authoritativeAnswers = [[NSMutableArray alloc] init];
+    for(int i = 0; i < 100; i++) {
+        NSString *piece = [NSString stringWithFormat:@"%d-",i];
+        NSString *next = [current stringByAppendingString:piece];
+        [authoritativeAnswers addObject:next];
+        current = next;
+    }
+    
+    current = @"";
+    for(int i = 0; i < 100; i++) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSString *piece = [NSString stringWithFormat:@"%d-",i];
+            NSString *next = [DCASampleLibrary concatenateStrings:current and:piece];
+            NSAssert([authoritativeAnswers[i] isEqualToString:next], @"Expected %@ and got %@",authoritativeAnswers[i],next);
+            current = next;
+        });
+
+    }
+    
+    /** So some questions are as follows:
+     
+     1.  Why does this happen?
+     2.  Is this a real bug in your library, or is there a problem with the test case?  Or both?
+     3.  Fix the problem(s)
+     4.  Can you infer any general rules about good practices for library code from this example?*/
+}
 
 
 

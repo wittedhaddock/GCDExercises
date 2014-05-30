@@ -12,4 +12,8 @@
 /** Displays an alert.
  This function is threadsafe and can be called from any thread. */
 +(void) sendAlertWithTitle:(NSString*) title;
+
+/**Concatenates the two strings.
+ This function is threadsafe. */
++(NSString*) concatenateStrings:(NSString*) string1 and:(NSString*) string2;
 @end

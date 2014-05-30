@@ -15,4 +15,17 @@
         [uav show];
     });
 }
+
+
++ (NSString *)concatenateStrings:(NSString *)string1 and:(NSString *)string2 {
+    /* because it is likely that a user will try to do
+     "foo"+"bar"+"baz"+"bat"
+     let's cache our return value and see if it can be re-used */
+    static NSMutableString *oldMutableString;
+    if (!oldMutableString || oldMutableString != string1) {
+        oldMutableString = [string1 mutableCopy];
+    }
+    [oldMutableString appendString:string2];
+    return oldMutableString;
+}
 @end
