@@ -177,6 +177,60 @@
     }
 
 }
+- (IBAction)exercise10:(id)sender {
+    /** This function can print the integers in order using either queue. Why does it work here and not in exercise 9?
+     
+     Does your custom class work here as well?
+     */
+    for(int i = 0; i < 10; i++) {
+        dispatch_sync([OneOfTheseThingsIsNotLikeTheOther queue2], ^{
+            NSLog(@"%d",i);
+            sleep(1);
+        });
+    }
+    for(int i = 10; i < 20; i++) {
+        dispatch_sync([OneOfTheseThingsIsNotLikeTheOther queue1], ^{
+            NSLog(@"%d",i);
+            sleep(1);
+        });
+    }
+}
+
+- (IBAction)exercise11:(id)sender {
+    /** This function measures the latency (throughput) of the default background queue with a very fine resolution */
+    dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    for(int i = 0; i < 100; i++) {
+        NSDate *date = [NSDate date];
+        dispatch_sync(globalQueue, ^{
+            NSDate *final = [NSDate date];
+            NSLog(@"%f",[final timeIntervalSinceDate:date]);
+        });
+    }
+    
+    /**Other than the first measurement, the timings I get are all very small and very even:
+     
+     2014-05-30 16:19:03.449 GCDExercises[86952:60b] 0.000024
+     2014-05-30 16:19:03.450 GCDExercises[86952:60b] 0.000006
+     2014-05-30 16:19:03.451 GCDExercises[86952:60b] 0.000001
+     2014-05-30 16:19:03.451 GCDExercises[86952:60b] 0.000002
+     2014-05-30 16:19:03.452 GCDExercises[86952:60b] 0.000001
+     2014-05-30 16:19:03.452 GCDExercises[86952:60b] 0.000002
+     2014-05-30 16:19:03.453 GCDExercises[86952:60b] 0.000001
+     2014-05-30 16:19:03.453 GCDExercises[86952:60b] 0.000001
+     
+     Is this consistent with interference from other jobs on the queue?  Why or why not?
+     
+     Does this result change any of your earlier answers?
+     
+     */
+     
+     
+}
+
+
+
+
+
 
 
 
