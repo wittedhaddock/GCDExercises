@@ -104,7 +104,7 @@
     
     /**No edits before this point */
     
-
+    customQueue = dispatch_queue_create("com.drewcrawfordapps.james.gcdexercises.ex5q", 0);
     
     /**No edits beyond this point */
     
