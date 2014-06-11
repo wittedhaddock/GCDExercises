@@ -37,8 +37,10 @@
         CGRect frame = self.label.frame;
         frame.origin.y += 50;
         self.label.frame = frame;
+    } completion:^(BOOL finished) {
+        self.label.text = @"no longer animating";
+
     }];
-    self.label.text = @"no longer animating";
 }
 
 - (IBAction)exercise2:(id)sender {
