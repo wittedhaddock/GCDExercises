@@ -80,7 +80,7 @@
 - (IBAction)exercise4:(id)sender {
 /**expected: at the same time the log is printed, the label text changes
  actual: there is a unexplainable delay */
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"changing label");
         self.label.text = @"exercise 4";
     });
