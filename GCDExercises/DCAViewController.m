@@ -129,12 +129,20 @@
         int time = arc4random() % 10;
         sleep(time);
         NSLog(@"first");
-        /** You may add code here */
-        NSLog(@"third");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                NSLog(@"third");
+
+            });
+        });
     });
-    /** You may add code here */
-    NSLog(@"second");
-    /** You may add code here */
+    dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            NSLog(@"second");
+
+        });
+
+    });
 }
 
 - (IBAction)exercise8:(id)sender {
