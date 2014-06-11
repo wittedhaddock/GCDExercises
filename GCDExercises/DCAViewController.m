@@ -96,7 +96,7 @@
     
     /**No edits before this point */
     
-    /** Add code only here */
+    customQueue = dispatch_get_main_queue();
     
     /**No edits beyond this point */
     
