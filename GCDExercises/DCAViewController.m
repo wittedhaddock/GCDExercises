@@ -192,14 +192,16 @@
     dispatch_queue_t queue2 = dispatch_get_main_queue();
     for(int i = 100; i < 200; i++) {
         dispatch_async(queue2, ^{
-            NSLog(@"%d",i);
-            sleep(1);
+           NSLog(@"%d",i);
+           sleep(1);
         });
+        
     }
 
 }
 - (IBAction)exercise10:(id)sender {
     /** This function can print the integers in order using either queue. Why does it work here and not in exercise 9?
+     It didn't work in exercise 9 because the first for loop returned instantly because queue 1 is concurrent. In this exercise, all the serial work is done first, and the only thing that is left on the execution queue is is the concurrent call.
      
      Does your custom class work here as well?
      */
