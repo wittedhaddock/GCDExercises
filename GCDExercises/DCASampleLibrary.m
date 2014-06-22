@@ -27,5 +27,7 @@
     }
     [oldMutableString appendString:string2];
     return oldMutableString;
+
+    //return [NSString stringWithFormat:@"%@%@", string1, string2];
 }
 @end
