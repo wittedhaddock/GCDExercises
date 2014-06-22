@@ -225,6 +225,7 @@
     for(int i = 0; i < 100; i++) {
         NSDate *date = [NSDate date];
         dispatch_sync(globalQueue, ^{
+            [[[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:nil cancelButtonTitle:@" " otherButtonTitles: nil] show];
             NSDate *final = [NSDate date];
             NSLog(@"%f",[final timeIntervalSinceDate:date]);
         });
@@ -242,9 +243,10 @@
      2014-05-30 16:19:03.453 GCDExercises[86952:60b] 0.000001
      
      Is this consistent with interference from other jobs on the queue?  Why or why not?
+     It behaves pro rata interference—more interference more latency
      
      Does this result change any of your earlier answers?
-     
+     No, but it provides insight into the relationship between queues.
      */
      
      
