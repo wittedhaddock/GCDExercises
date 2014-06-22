@@ -99,12 +99,12 @@
     customQueue = dispatch_get_main_queue();
     
     /**No edits beyond this point */
-    
     for(int i = 0; i < 100; i++) {
         dispatch_async(customQueue, ^{
             NSLog(@"%d",i);
             sleep(1);
         });
+        
     }
     
 }
@@ -112,10 +112,14 @@
     /**Expected: prints a statement after 5 seconds
      Actual: hangs the application */
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             NSLog(@"Got here");
         });
+        
+        
     });
+    
+    
 }
 - (IBAction)exercise7:(id)sender {
     /**By only editing in the areas provided, make the output
@@ -172,8 +176,10 @@
      
      No source code for OneOfTheseThingsIsNotLikeTheOther is provided.  Can you figure out how it works?  Can you write your own version?
      
+     First queue is a concurrent queue which explains why the logged integers appear altogether. The second qeueue is a seriel queue which explains why the logged integers appear 1 second after the preceding.
+     
      */
-    dispatch_queue_t queue1 = [OneOfTheseThingsIsNotLikeTheOther queue2];
+    dispatch_queue_t queue1 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     
     for(int i = 0; i < 100; i++) {
@@ -183,7 +189,7 @@
         });
     }
     sleep(5);
-    dispatch_queue_t queue2 = [OneOfTheseThingsIsNotLikeTheOther queue1];
+    dispatch_queue_t queue2 = dispatch_get_main_queue();
     for(int i = 100; i < 200; i++) {
         dispatch_async(queue2, ^{
             NSLog(@"%d",i);

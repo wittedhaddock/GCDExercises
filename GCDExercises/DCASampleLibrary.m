@@ -10,7 +10,7 @@
 
 @implementation DCASampleLibrary
 + (void)sendAlertWithTitle:(NSString *)title {
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UIAlertView *uav = [[UIAlertView alloc] initWithTitle:title message:@"My Alert" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [uav show];
     });
