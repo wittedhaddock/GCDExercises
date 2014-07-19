@@ -53,8 +53,9 @@
      object 6
      */
     NSArray *myArray = @[@1,@2,@3,@4,@5,@6];
-    [myArray enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSLog(@"object %d",myArray.count - [(NSNumber *)obj integerValue] + 1);
+    [myArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        NSLog(@"object %@", obj);
     }];
 }
 - (IBAction)exercise3:(id)sender {
