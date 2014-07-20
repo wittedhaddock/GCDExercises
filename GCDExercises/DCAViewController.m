@@ -270,6 +270,7 @@
             NSString *next = [DCASampleLibrary concatenateStrings:current and:piece];
             NSAssert([authoritativeAnswers[i] isEqualToString:next], @"Expected %@ and got %@",authoritativeAnswers[i],next);
             current = next;
+        NSLog(@"%d", i);
         });
 
     }
@@ -277,9 +278,14 @@
     /** So some questions are as follows:
      
      1.  Why does this happen?
+     This is happening because the the asynchronous dispatch returns instantly and no order is guaranteed. The piece string is, however, returning a string in the authoritativeAnswers, but not at index i. Consequently, they are unequal.
      2.  Is this a real bug in your library, or is there a problem with the test case?  Or both?
+     This is a problem with the test case. The asynchronous dispatch belonds to the test case.
      3.  Fix the problem(s)
-     4.  Can you infer any general rules about good practices for library code from this example?*/
+     Synchronous dispatch replaces asynchronous.
+     4.  Can you infer any general rules about good practices for library code from this example?
+     Yes. There is a tradeoff between concurrency and data integrity. Order is not guaranteed in asynchronous threads and therefore good practice would be to account for such. Library code should also specify how it behaves in different threads and intended use, and warnings for scenarios with unintended results.
+     */
 }
 
 
