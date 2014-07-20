@@ -131,20 +131,16 @@
         int time = arc4random() % 10;
         sleep(time);
         NSLog(@"first");
-        dispatch_async(dispatch_get_main_queue(), ^{
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                NSLog(@"third");
-
-            });
+        dispatch_queue_t newQ = dispatch_queue_create("my.awesome.q", 0);
+        dispatch_async(newQ, ^{
+            NSLog(@"third");
         });
     });
     dispatch_async(dispatch_get_main_queue(), ^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSLog(@"second");
-
-        });
+        NSLog(@"second");
 
     });
+    /** You may add code here */
 }
 
 - (IBAction)exercise8:(id)sender {
@@ -285,10 +281,6 @@
      3.  Fix the problem(s)
      4.  Can you infer any general rules about good practices for library code from this example?*/
 }
-
-
-
-
 
 
 
