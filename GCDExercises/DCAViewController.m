@@ -265,10 +265,10 @@
     
     current = @"";
     for(int i = 0; i < 100; i++) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSString *piece = [NSString stringWithFormat:@"%d-",i];
             NSString *next = [DCASampleLibrary concatenateStrings:current and:piece];
-            NSAssert([authoritativeAnswers[i] isEqualToString:next], @"Expected %@ and got %@ during %d",authoritativeAnswers[i],next, i);
+            NSAssert([authoritativeAnswers[i] isEqualToString:next], @"Expected %@ and got %@",authoritativeAnswers[i],next);
             current = next;
         });
 
